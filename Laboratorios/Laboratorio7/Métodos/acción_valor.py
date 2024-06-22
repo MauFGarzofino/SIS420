@@ -26,7 +26,7 @@ def run(episodes, is_training=True, render=False):
         
     epsilon = 1 # Probabilidad inicial de tomar acciones aleatorias
     epsilon_min = 0  # Valor mínimo de epsilon
-    epsilon_decay = 0.001
+    epsilon_decay = 0.0001 # 0.0001 * 10000 = 1
     rng = np.random.default_rng()  # Generador de números aleatorios
 
     rewards_per_episode = np.zeros(episodes)
@@ -98,4 +98,4 @@ def run(episodes, is_training=True, render=False):
             pickle.dump(q, f)
             
 if __name__ == '__main__':
-    run(1000, is_training=False, render=False)
+    run(150000, is_training=False, render=False)

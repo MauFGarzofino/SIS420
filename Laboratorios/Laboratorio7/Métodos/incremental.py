@@ -24,7 +24,7 @@ def run(episodes, is_training=True, render=False):
         
     epsilon = 1 # Probabilidad inicial de tomar acciones aleatorias
     epsilon_min = 0  # Valor mínimo de epsilon
-    epsilon_decay = 0.0001 # 0.0001 * 1000 = 1 Luego de 1000 episodios el agente se convierte en greedy
+    epsilon_decay = 0.0001 # 0.0001 * 1000 = 1 Luego de 10000 episodios el agente se convierte en greedy
     alpha = 0.1  # Tasa de aprendizaje
     rng = np.random.default_rng()  # Generador de números aleatorios
 
