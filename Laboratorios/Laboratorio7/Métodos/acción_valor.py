@@ -91,11 +91,12 @@ def run(episodes, is_training=True, render=False):
     plt.xlabel('Episodios')
     plt.ylabel('Recompensa Acumulada')
     plt.title('Recompensa Acumulada por Episodio en Frozen Lake')
-    plt.savefig('Laboratorios/Laboratorio7/Métodos/Gráficos/Acción_Valor/frozen_lake4x4test.png')
+    plt.savefig('Laboratorios/Laboratorio7/Métodos/Gráficos/Acción_Valor/frozen_lake4x4_test.png')
 
     if is_training:
         with open("Laboratorios/Laboratorio7/Métodos/QTable/Acción_Valor/frozen_lake4x4.pkl", "wb") as f:
             pickle.dump(q, f)
             
 if __name__ == '__main__':
-    run(150000, is_training=False, render=False)
+    #run(15000, is_training=True, render=True)
+    run(1000, is_training=False, render=True)

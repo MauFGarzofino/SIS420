@@ -103,5 +103,5 @@ def run(episodes, is_training=True, render=False):
                 env.render()
 
 if __name__ == '__main__':
-    run(1000, is_training=True, render=False)  # Aumentar el número de episodios de entrenamiento
+    #run(1000, is_training=True, render=False)  # Aumentar el número de episodios de entrenamiento
     run(3, is_training=False, render=True)
