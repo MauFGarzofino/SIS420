@@ -14,24 +14,25 @@ gym.register(
 )
 
 def run(episodes, is_training=True, render=False):
-    # 'FrozenLake-enhanced' es el id especificado anteriormente
     env = gym.make('FrozenLake-enhanced', desc=None, map_name="4x4", is_slippery=False, render_mode='human' if render else None)
     
     if is_training:
         q = np.zeros((env.observation_space.n, env.action_space.n))  # Inicializamos la tabla Q
         acciones = np.ones((env.observation_space.n, env.action_space.n))  # Contador de acciones tomadas inicializado en 1 para evitar división por cero
     else:
-        with open('Laboratorios/Laboratorio7/Métodos/QTable/UCB_Incremental/frozen_lake8x8.pkl', 'rb') as f:
+        with open('Laboratorios/Laboratorio7/Métodos/QTable/UCB/frozen_lake4x4.pkl', 'rb') as f:
             q = pickle.load(f)
             acciones = np.ones((env.observation_space.n, env.action_space.n))
         
-    c = 1.0  # Constante para UCB
+    c = 1.0  # Constante inicial para UCB
+    c_min = 0  # Valor mínimo de c
+    c_decay = 0.001
     alpha = 0.1  # Tasa de aprendizaje
 
     rewards_per_episode = np.zeros(episodes)
     
     previous_states = []
-    max_previous_states = 1
+    max_previous_states = 4
     penalty = -0.2  # Penalización por movimiento repetitivo
     
     for i in range(episodes):
@@ -41,7 +42,7 @@ def run(episodes, is_training=True, render=False):
 
         while not terminated and not truncated:
             if is_training:
-                # Selección de acción usando UCB
+                # Selección de acción usando UCB con c variable
                 total_actions = np.sum(acciones[state, :])
                 ucb_values = q[state, :] + c * np.sqrt(np.log(total_actions + 1) / acciones[state, :])
                 action = np.argmax(ucb_values)
@@ -75,6 +76,10 @@ def run(episodes, is_training=True, render=False):
 
             state = new_state
             rewards_per_episode[i] += reward
+
+        # Disminuir c
+        if is_training:
+            c = max(c - c_decay, c_min)
     
     env.close()
     
@@ -85,13 +90,13 @@ def run(episodes, is_training=True, render=False):
     plt.xlabel('Episodios')
     plt.ylabel('Recompensa Acumulada')
     plt.title('Recompensa Acumulada por Episodio en Frozen Lake')
-    plt.savefig('Laboratorios/Laboratorio7/Métodos/Gráficos/UCB_Incremental/frozen_lake8x8.png')
+    plt.savefig('Laboratorios/Laboratorio7/Métodos/Gráficos/UCB/frozen_lake4x4.png')
     plt.show()
 
     if is_training:
-        with open("Laboratorios/Laboratorio7/Métodos/QTable/UCB_Incremental/frozen_lake8x8.pkl", "wb") as f:
+        with open("Laboratorios/Laboratorio7/Métodos/QTable/UCB/frozen_lake4x4.pkl", "wb") as f:
             pickle.dump(q, f)
 
 if __name__ == '__main__':
-    run(15000, is_training=True, render=True)
-    #run(1000, is_training=False, render=True)
+    #run(15000, is_training=True, render=True)
+    run(1000, is_training=False, render=True)
