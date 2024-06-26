@@ -21,7 +21,7 @@ def run(episodes, is_training=True, render=False):
         acciones = np.zeros((env.observation_space.n, env.action_space.n))  # Contador de acciones tomadas
         recompensas = np.zeros((env.observation_space.n, env.action_space.n))  # Total de recompensas por acción
     else:
-        with open('Laboratorios/Laboratorio7/Métodos/QTable/Acción_Valor/frozen_lake4x4.pkl', 'rb') as f:
+        with open('SIS420/Laboratorios/Laboratorio7/Métodos/QTable/Acción_Valor/frozen_lake4x4.pkl', 'rb') as f:
             q = pickle.load(f)
         
     epsilon = 1 # Probabilidad inicial de tomar acciones aleatorias
